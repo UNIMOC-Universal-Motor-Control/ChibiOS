@@ -126,6 +126,23 @@ static uint32_t canclk;
 /* Driver local functions.                                                   */
 /*===========================================================================*/
 
+static bool fdcan_clock_start(CANDriver *canp) {
+  systime_t start, end;
+
+  /* Requesting clock stop then waiting for it to happen.*/
+  canp->fdcan->CCCR &= ~FDCAN_CCCR_CSR;
+  start = osalOsGetSystemTimeX();
+  end = osalTimeAddX(start, TIME_MS2I(TIMEOUT_INIT_MS));
+  while ((canp->fdcan->CCCR & FDCAN_CCCR_CSA) != 0U) {
+    if (!osalTimeIsInRangeX(osalOsGetSystemTimeX(), start, end)) {
+      return true;
+    }
+    osalThreadSleepS(1);
+  }
+
+  return false;
+}
+
 static bool fdcan_clock_stop(CANDriver *canp) {
   systime_t start, end;
 
@@ -298,6 +315,13 @@ bool can_lld_start(CANDriver *canp) {
                         FDCAN_IE_TCE;
   canp->fdcan->TXBTIE = FDCAN_TXBTIE_TIE;
   canp->fdcan->ILE    = FDCAN_ILE_EINT0;
+
+
+  /* Requesting clock start.*/
+  if (fdcan_clock_start(canp)) {
+    osalDbgAssert(false, "CAN clock initialization failed, check clocks and pin config");
+    return true;
+  }
 
   /* Going in active mode.*/
   if (fdcan_active_mode(canp)) {
