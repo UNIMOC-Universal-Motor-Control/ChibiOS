@@ -133,7 +133,7 @@ static bool fdcan_clock_start(CANDriver *canp) {
   canp->fdcan->CCCR &= ~FDCAN_CCCR_CSR;
   start = osalOsGetSystemTimeX();
   end = osalTimeAddX(start, TIME_MS2I(TIMEOUT_INIT_MS));
-  while ((canp->fdcan->CCCR & FDCAN_CCCR_CSA) != 0U) {
+  while ((canp->fdcan->CCCR & FDCAN_CCCR_CSA) == 0U) {
     if (!osalTimeIsInRangeX(osalOsGetSystemTimeX(), start, end)) {
       return true;
     }
@@ -322,6 +322,22 @@ bool can_lld_start(CANDriver *canp) {
     osalDbgAssert(false, "CAN clock initialization failed, check clocks and pin config");
     return true;
   }
+
+#ifdef STM32H7XX
+  /* H7 version of FDCAN has configurable memory layout, so configure it */
+  canp->fdcan->SIDFC = STM32_FDCAN_FLS_NBR << 16 | SRAMCAN_FLSSA;
+  canp->fdcan->XIDFC = STM32_FDCAN_FLE_NBR << 16 | SRAMCAN_FLESA;
+  canp->fdcan->RXF0C = STM32_FDCAN_RF0_NBR << 16 | SRAMCAN_RF0SA;
+  canp->fdcan->RXF1C = STM32_FDCAN_RF1_NBR << 16 | SRAMCAN_RF1SA;
+  canp->fdcan->RXBC  = SRAMCAN_RBSA;
+  canp->fdcan->TXEFC = STM32_FDCAN_TEF_NBR << 16 | SRAMCAN_TEFSA;
+  /* NB: this doesn't set NDTB, but sets TFQS to run in queue mode with no dedicated buffers */
+  canp->fdcan->TXBC  = STM32_FDCAN_TB_NBR  << 24 | SRAMCAN_TBSA;
+
+  /* set to use the full 18-byte size buffer elements */
+  canp->fdcan->TXESC = 0x007;
+  canp->fdcan->RXESC = 0x777;
+#endif /* STM32H7XX */
 
   /* Going in active mode.*/
   if (fdcan_active_mode(canp)) {
