@@ -129,11 +129,11 @@ static uint32_t canclk;
 static bool fdcan_clock_start(CANDriver *canp) {
   systime_t start, end;
 
-  /* Requesting clock stop then waiting for it to happen.*/
+  /* Requesting clock start then waiting for it to happen.*/
   canp->fdcan->CCCR &= ~FDCAN_CCCR_CSR;
   start = osalOsGetSystemTimeX();
-  end = osalTimeAddX(start, TIME_MS2I(TIMEOUT_INIT_MS));
-  while ((canp->fdcan->CCCR & FDCAN_CCCR_CSA) == 0U) {
+  end = osalTimeAddX(start, TIME_MS2I(TIMEOUT_CSA_MS));
+  while ((canp->fdcan->CCCR & FDCAN_CCCR_CSA) == FDCAN_CCCR_CSA) {
     if (!osalTimeIsInRangeX(osalOsGetSystemTimeX(), start, end)) {
       return true;
     }
@@ -149,7 +149,7 @@ static bool fdcan_clock_stop(CANDriver *canp) {
   /* Requesting clock stop then waiting for it to happen.*/
   canp->fdcan->CCCR |= FDCAN_CCCR_CSR;
   start = osalOsGetSystemTimeX();
-  end = osalTimeAddX(start, TIME_MS2I(TIMEOUT_INIT_MS));
+  end = osalTimeAddX(start, TIME_MS2I(TIMEOUT_CSA_MS));
   while ((canp->fdcan->CCCR & FDCAN_CCCR_CSA) == 0U) {
     if (!osalTimeIsInRangeX(osalOsGetSystemTimeX(), start, end)) {
       return true;
@@ -279,8 +279,8 @@ bool can_lld_start(CANDriver *canp) {
   }
 #endif
 
-  /* Requesting clock stop.*/
-  if (fdcan_clock_stop(canp)) {
+  /* Requesting clock start.*/
+  if (fdcan_clock_start(canp)) {
     osalDbgAssert(false, "CAN clock stop failed, check clocks and pin config");
     return true;
   }
