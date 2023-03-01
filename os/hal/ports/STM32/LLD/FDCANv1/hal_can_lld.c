@@ -327,9 +327,6 @@ bool can_lld_start(CANDriver *canp) {
   /* H7 version of FDCAN has configurable memory layout, so configure it */
   canp->fdcan->SIDFC = STM32_FDCAN_FLS_NBR << 16 | SRAMCAN_FLSSA;
   canp->fdcan->XIDFC = STM32_FDCAN_FLE_NBR << 16 | SRAMCAN_FLESA;
-#else
-  canp->fdcan->RXGFC = STM32_FDCAN_FLS_NBR << 16 | SRAMCAN_FLSSA | STM32_FDCAN_FLE_NBR << 24 | SRAMCAN_FLESA;
-#endif
   canp->fdcan->RXF0C = STM32_FDCAN_RF0_NBR << 16 | SRAMCAN_RF0SA;
   canp->fdcan->RXF1C = STM32_FDCAN_RF1_NBR << 16 | SRAMCAN_RF1SA;
   canp->fdcan->RXBC  = SRAMCAN_RBSA;
@@ -340,6 +337,7 @@ bool can_lld_start(CANDriver *canp) {
   /* set to use the full 18-byte size buffer elements */
   canp->fdcan->TXESC = 0x007;
   canp->fdcan->RXESC = 0x777;
+#endif /* STM32H7XX */
 
   /* Going in active mode.*/
   if (fdcan_active_mode(canp)) {
