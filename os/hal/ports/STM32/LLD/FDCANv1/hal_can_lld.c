@@ -625,6 +625,62 @@ void can_lld_serve_interrupt(CANDriver *canp) {
   }
 }
 
+
+static void can_lld_set_filters(CANDriver* canp,
+                                uint32_t can2sb,
+                                uint32_t num,
+                                const CANFilter *cfp) {
+  (void) can2sb;
+
+  if (num > 0) {
+    uint32_t filter_field1;
+    uint32_t filter_field2;
+    uint32_t *filter_address;
+    for (size_t i = 0; i < num; i++) {
+      if (cfp->scale == 0) {
+
+        osalDbgCheck(cfp->filter <= STM32_FDCAN_FLS_NBR);
+
+        filter_field1 = ((cfp->SFT << 30U) | (cfp->SFEC << 27U) |
+                          (cfp->SFID1 << 16U) | cfp->SFID2);
+        /* Calculate filter address */
+        filter_address = (uint32_t *)(canp->ram_base + SRAMCAN_FLSSA + (cfp->filter * SRAMCAN_FLS_SIZE));
+
+        /* Write filter element to the message RAM */
+        *filter_address = filter_field1;
+      }
+      else {
+
+        osalDbgCheck(cfp->filter <= STM32_FDCAN_FLE_NBR);
+
+        /* Build first word of filter element */
+        filter_field1 = ((cfp->EFEC << 29U) | cfp->EFID1);
+
+        /* Build second word of filter element */
+        filter_field2 = ((cfp->EFT << 30U) | cfp->EFID2);
+
+        /* Calculate filter address */
+        filter_address = (uint32_t *)(canp->ram_base + SRAMCAN_FLESA + (cfp->filter * SRAMCAN_FLS_SIZE));
+
+        /* Write filter element to the message RAM */
+        *filter_address = filter_field1;
+        filter_address++;
+        *filter_address = filter_field2;
+      }
+      cfp++;
+    }
+
+  }
+}
+
+void canSTM32SetFilters(CANDriver *canp, uint32_t can2sb,
+                        uint32_t num, const CANFilter *cfp) {
+
+  osalDbgAssert(canp->state == CAN_READY, "invalid state");
+
+  can_lld_set_filters(canp, can2sb, num, cfp);
+}
+
 #endif /* HAL_USE_CAN */
 
 /** @} */
