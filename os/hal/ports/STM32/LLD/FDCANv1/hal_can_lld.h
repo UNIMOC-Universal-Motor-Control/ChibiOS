@@ -46,6 +46,17 @@
  */
 #define CAN_RX_MAILBOXES            2
 
+/**
+ * @name    CAN registers helper macros
+ * @{
+ */
+#define FDCAN_SET_RXGFC_LSS(n) 		(n << FDCAN_RXGFC_LSS_Pos)		/**< @brief LSS field macro.*/
+#define FDCAN_SET_RXGFC_LSE(n) 		(n << FDCAN_RXGFC_LSE_Pos)		/**< @brief LSE field macro.*/
+#define FDCAN_SET_RXGFC_ANFS(n) 	(n << FDCAN_RXGFC_ANFS_Pos)		/**< @brief ANFS field macro.*/
+#define FDCAN_SET_RXGFC_ANFE(n) 	(n << FDCAN_RXGFC_ANFE_Pos)		/**< @brief ANFE field macro.*/
+#define FDCAN_SET_RXGFC_RRFS(n) 	(n << FDCAN_RXGFC_RRFS_Pos)		/**< @brief RRFS field macro.*/
+#define FDCAN_SET_RXGFC_RRFE(n)		(n << FDCAN_RXGFC_RRFE_Pos)		/**< @brief RRFE field macro.*/
+/** @} */
 
 /*===========================================================================*/
 /* Driver pre-compile time settings.                                         */
@@ -265,50 +276,75 @@ typedef struct {
 } CANRxFrame;
 
 /**
- * @brief   CAN standard filter.
- * @note    Accessing the frame data as word16 or word32 is not portable
- *          because machine data endianness, it can be still useful for a
- *          quick filling.
+ * @brief   CAN filter.
+ * @note    Refer to the STM32 reference manual for info about filters.
  */
 typedef struct {
-  union {
-    struct {
-      uint16_t              SFID2:11;
-      uint8_t               _R1:5;
-      uint16_t              SFID1:11;
-      uint8_t               SFEC:3;
-      uint8_t               SFT:2;
-    };
-    union {
-      uint32_t              data32;
-      uint16_t              data16[2];
-      uint8_t               data8[4];
-    };
-  };
-} CANRxStandardFilter;
+  /**
+   * @brief   Filter scale.
+   * @note    This bit associated to this
+   *          filter (0=16 bits mode, 1=32 bits mode).
+   */
+  uint32_t                  scale:1;
 
-/**
- * @brief   CAN extended filter.
- * @note    Accessing the frame data as word16 or word32 is not portable
- *          because machine data endianness, it can be still useful for a
- *          quick filling.
-*/
-typedef struct {
+  /**
+   * @brief   Number of the filter to be programmed.
+   */
+  uint32_t                  filter;
+
+  /**
+   * @brief   Filter Type.
+   */
   union {
-    struct {
-      uint32_t              EFID1:29;
-      uint8_t               EFEC:3;
-      uint32_t              EFID2:29;
-      uint8_t               _R1:1;
-      uint8_t               EFT:2;
-    };
-    union {
-      uint32_t              data32[2];
-      uint16_t              data16[4];
-      uint8_t               data8[8];
-    };
+  /**
+    * @brief  Standard filter type.
+    * @note   – 00: Range filter from SFID1 to SFID2
+    *         – 01: Dual ID filter for SFID1 or SFID2
+    *         – 10: Classic filter: SFID1 = filter, SFID2 = mask
+    *         – 11: Filter element disabled
+    */
+    uint8_t               SFT:2;
+
+  /**
+    * @brief  Extended filter type.
+    * @note   – 00: Range filter from EF1ID to EF2ID (EF2ID >= EF1ID)
+    *         – 01: Dual ID filter for EF1ID or EF2ID
+    *         – 10: Classic filter: EF1ID = filter, EF2ID = mask
+    *         – 11: Range filter from EF1ID to EF2ID (EF2ID >= EF1ID), XIDAM mask not applied
+    */
+    uint8_t               EFT:2;
   };
-} CANRxExtendedFilter;
+
+  /**
+   * @brief   Standard or Extended filter element configuration.
+   * @note    – 000: Disable filter element
+   *          – 001: Store in Rx FIFO 0 if filter matches
+   *          – 010: Store in Rx FIFO 1 if filter matches
+   *          – 011: Reject ID if filter matches
+   *          – 100: Set priority if filter matches
+   *          – 101: Set priority and store in FIFO 0 if filter matches
+   *          – 110: Set priority and store in FIFO 1 if filter matches
+   *          – 111: Not used
+   */
+  union {
+    uint8_t               SFEC:3;
+    uint8_t               EFEC:3;
+  };
+  /**
+   * @brief   Standard or Extended filter ID 1 (identifier).
+   */
+  union {
+    uint16_t              SFID1:11;
+    uint32_t              EFID1:29;
+  };
+  /**
+   * @brief   Standard or Extended filter ID 2. (mask/identifier depending on mode=0/1).
+   */
+  union {
+    uint16_t              SFID2:11;
+    uint32_t              EFID2:29;
+  };
+} CANFilter;
 
 /**
  * @brief   Type of a CAN configuration structure.
