@@ -532,7 +532,8 @@ static bool hal_lld_clock_raw_switch(const halclkcfg_t *ccp) {
 
   /* If the clock source is not HSI then we switch to HSI and reset some
      other relevant registers to their default value.*/
-  if ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI) {
+//  if ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI)
+  {
 
     /* Making sure HSI is activated and in use.*/
     hsi16_reset();
