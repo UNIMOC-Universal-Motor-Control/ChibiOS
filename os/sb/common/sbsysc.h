@@ -107,25 +107,35 @@
 /** @} */
 
 /**
+ * @name    Virtual SPI syscall sub-codes
+ * @{
+ */
+#define SB_VSPI_INIT            0
+#define SB_VSPI_DEINIT          1
+#define SB_VSPI_SETCFG          0
+/** @} */
+
+/**
  * @name    Virtual UART syscall sub-codes
  * @{
  */
 #define SB_VUART_INIT           0
 #define SB_VUART_DEINIT         1
-#define SB_VUART_ISRXE          0
-#define SB_VUART_ISRXI          1
-#define SB_VUART_ISTXF          2
-#define SB_VUART_ISTXO          3
-#define SB_VUART_HASERR         4
-#define SB_VUART_READ           5
-#define SB_VUART_WRITE          6
-#define SB_VUART_GET            7
-#define SB_VUART_PUT            8
-#define SB_VUART_WREN           9
-#define SB_VUART_GCERR          10
-#define SB_VUART_GCEVT          11
-#define SB_VUART_GEVT           12
-#define SB_VUART_CTL            13
+#define SB_VUART_SETCFG         0
+#define SB_VUART_ISRXE          1
+#define SB_VUART_ISRXI          2
+#define SB_VUART_ISTXF          3
+#define SB_VUART_ISTXO          4
+#define SB_VUART_HASERR         5
+#define SB_VUART_READ           6
+#define SB_VUART_WRITE          7
+#define SB_VUART_GET            8
+#define SB_VUART_PUT            9
+#define SB_VUART_WREN           10
+#define SB_VUART_GCERR          11
+#define SB_VUART_GCEVT          12
+#define SB_VUART_GEVT           13
+#define SB_VUART_CTL            14
 /** @} */
 
 /*===========================================================================*/

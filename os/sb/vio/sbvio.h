@@ -32,6 +32,7 @@
 
 #include "vioconf.h"
 #include "sbvio_gpio.h"
+#include "sbvio_spi.h"
 #include "sbvio_uart.h"
 
 /*===========================================================================*/
@@ -49,6 +50,10 @@
 /* Checks on configuration options.*/
 #if !defined(VIO_CFG_ENABLE_GPIO) || defined(__DOXYGEN__)
 #error "VIO_CFG_ENABLE_GPIO not defined in vioconf.h"
+#endif
+
+#if !defined(VIO_CFG_ENABLE_SPI) || defined(__DOXYGEN__)
+#error "VIO_CFG_ENABLE_SPI not defined in vioconf.h"
 #endif
 
 #if !defined(VIO_CFG_ENABLE_UART) || defined(__DOXYGEN__)
@@ -78,6 +83,16 @@ typedef struct vio_conf {
    * @brief   Virtual UART configurations.
    */
   const vio_uart_configs_t      *uartconfs;
+#endif
+#if (VIO_CFG_ENABLE_SPI == TRUE) || defined(__DOXYGEN__)
+  /**
+   * @brief   Virtual SPI units.
+   */
+  const vio_spi_units_t         *spis;
+  /**
+   * @brief   Virtual SPI configurations.
+   */
+  const vio_spi_configs_t       *spiconfs;
 #endif
 } vio_conf_t;
 

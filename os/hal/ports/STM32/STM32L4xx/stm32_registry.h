@@ -110,6 +110,7 @@
 #define STM32_HAS_ADC2                      FALSE
 #define STM32_HAS_ADC3                      FALSE
 #define STM32_HAS_ADC4                      FALSE
+#define STM32_HAS_ADC5                      FALSE
 
 /* CAN attributes.*/
 #define STM32_CAN_MAX_FILTERS               14
@@ -244,7 +245,7 @@
 
 #define STM32_HAS_TIM16                     TRUE
 #define STM32_TIM16_IS_32BITS               FALSE
-#define STM32_TIM16_CHANNELS                2
+#define STM32_TIM16_CHANNELS                1
 
 #define STM32_HAS_TIM3                      FALSE
 #define STM32_HAS_TIM4                      FALSE
@@ -381,6 +382,7 @@
 
 #define STM32_HAS_ADC3                      FALSE
 #define STM32_HAS_ADC4                      FALSE
+#define STM32_HAS_ADC5                      FALSE
 
 /* CAN attributes.*/
 #define STM32_HAS_CAN1                      FALSE
@@ -498,11 +500,11 @@
 
 #define STM32_HAS_TIM15                     TRUE
 #define STM32_TIM15_IS_32BITS               FALSE
-#define STM32_TIM15_CHANNELS                2/* SPI attributes. */
+#define STM32_TIM15_CHANNELS                2
 
 #define STM32_HAS_TIM16                     TRUE
 #define STM32_TIM16_IS_32BITS               FALSE
-#define STM32_TIM16_CHANNELS                2
+#define STM32_TIM16_CHANNELS                1
 
 #define STM32_HAS_TIM3                      FALSE
 #define STM32_HAS_TIM4                      FALSE
@@ -612,6 +614,7 @@
 #define STM32_HAS_ADC2                      FALSE
 #define STM32_HAS_ADC3                      FALSE
 #define STM32_HAS_ADC4                      FALSE
+#define STM32_HAS_ADC5                      FALSE
 
 /* CAN attributes.*/
 #define STM32_CAN_MAX_FILTERS               14
@@ -763,7 +766,7 @@
 
 #define STM32_HAS_TIM16                     TRUE
 #define STM32_TIM16_IS_32BITS               FALSE
-#define STM32_TIM16_CHANNELS                2
+#define STM32_TIM16_CHANNELS                1
 
 #define STM32_HAS_TIM3                      FALSE
 #define STM32_HAS_TIM4                      FALSE
@@ -878,6 +881,7 @@
 #define STM32_HAS_ADC2                      FALSE
 #define STM32_HAS_ADC3                      FALSE
 #define STM32_HAS_ADC4                      FALSE
+#define STM32_HAS_ADC5                      FALSE
 
 /* CAN attributes.*/
 #define STM32_CAN_MAX_FILTERS               14
@@ -1023,7 +1027,7 @@
 
 #define STM32_HAS_TIM16                     TRUE
 #define STM32_TIM16_IS_32BITS               FALSE
-#define STM32_TIM16_CHANNELS                2
+#define STM32_TIM16_CHANNELS                1
 
 #define STM32_HAS_TIM4                      FALSE
 #define STM32_HAS_TIM5                      FALSE
@@ -1151,6 +1155,7 @@
 #define STM32_ADC3_DMA_CHN                  0x00000000
 
 #define STM32_HAS_ADC4                      FALSE
+#define STM32_HAS_ADC5                      FALSE
 
 /* CAN attributes.*/
 #define STM32_CAN_MAX_FILTERS               14
@@ -1320,11 +1325,11 @@
 
 #define STM32_HAS_TIM16                     TRUE
 #define STM32_TIM16_IS_32BITS               FALSE
-#define STM32_TIM16_CHANNELS                2
+#define STM32_TIM16_CHANNELS                1
 
 #define STM32_HAS_TIM17                     TRUE
 #define STM32_TIM17_IS_32BITS               FALSE
-#define STM32_TIM17_CHANNELS                2
+#define STM32_TIM17_CHANNELS                1
 
 #define STM32_HAS_TIM9                      FALSE
 #define STM32_HAS_TIM10                     FALSE
@@ -1625,9 +1630,11 @@
 
 #define STM32_HAS_TIM16                     TRUE
 #define STM32_TIM16_IS_32BITS               FALSE
+#define STM32_TIM16_CHANNELS                1
 
 #define STM32_HAS_TIM17                     TRUE
 #define STM32_TIM17_IS_32BITS               FALSE
+#define STM32_TIM16_CHANNELS                1
 
 #define STM32_HAS_TIM9                      FALSE
 #define STM32_HAS_TIM10                     FALSE

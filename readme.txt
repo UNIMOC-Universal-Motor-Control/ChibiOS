@@ -74,6 +74,14 @@
 *****************************************************************************
 
 *** Next ***
+- NEW: STM32 RTCv2 and RTCv3 modified to not use shadow registers.
+- NEW: Enhanced STM32F7xx MPU configuration in mcuconf.h.
+- NEW: I2C slave support in HAL high level driver.
+- NEW: Added settings for STM32 OCTOSPIv1 and OCTOSPIv2 TCR bits SSHIFT and
+       DHQC.
+- NEW: Automatic removal of duplicated inclusion paths on make command lines.
+- NEW: Reworked STM32 SDMMCv1 and SDMMCv2 drivers, better timeout and clock
+       handling, improved speed for aligned buffers.
 - NEW: Added a "waend" field to the thread structure in RT for debug
        convenience.
 - NEW: Added a para-virtualized HAL port for use in sandboxes.
@@ -107,6 +115,37 @@
        instead of a simple size.
 - NEW: RT and NIL upgraded to support the enhanced OSLIB.
 - NEW: Memory areas/pointers checker functions added to OSLIB.
+- FIX: Fixed unnecessary code in SNOR device drivers (bug #1265)
+       (backported to 20.3.5)(backported to 21.11.4).
+- FIX: Fixed RP2040 HAL GPIO failed to compile (bug #1264)
+       (backported to 21.11.4).
+- FIX: Fixed channel 0 corruption on STM32 BDMAv1 (bug #1263)
+       (backported to 20.3.5)(backported to 21.11.4).
+- FIX: Fixed wrong statistics in RT7 (bug #1262)(backported to 21.11.4).
+- FIX: Fixed missing cache management during Cortex-M RAM initializations
+       (bug #1261)(backported to 20.3.5)(backported to 21.11.4).
+- FIX: Fixed RTC & TAMP interrupts not functional (bug #1260)
+       (backported to 21.11.4).
+- FIX: Fixed syntax errors in STM32H7xx/hal_lld_type2.h (bug #1259)
+       (backported to 21.11.4).
+- FIX: Fixed unwanted reset of cache on STM32H7xx (bug #1258)
+       (backported to 20.3.5)(backported to 21.11.4).
+- FIX: Fixed invalid HSIDIV in STM32Ggxx clocks initialization (bug #1257)
+       (backported to 21.11.4).
+- FIX: Fixed incorrect RTC initialization on STM32G4/L4/L4+ (bug #1256)
+       (backported to 20.3.5)(backported to 21.11.4).
+- FIX: Fixed syntax error in RP2040 GPIO driver (bug #1255)
+       (backported to 21.11.4).
+- FIX: Fixed undefined STM32_SDMMC_MAXCLK value for STM32H7 type 1 and 2
+       (bug #1254)(backported to 21.11.4).
+- FIX: Fixed invalid checks on PLLP/R/Q dividers on STM32H7 (bug #1253)
+       (backported to 20.3.5)(backported to 21.11.4).
+- FIX: Fixed remote wakeup failure in STM32 OTGv1 driver (bug #1252)
+       (backported to 20.3.5)(backported to 21.11.4).
+- FIX: Fixed wrong use of hooks in RT/NIL (bug #1251)
+       (backported to 20.3.5)(backported to 21.11.4).
+- FIX: Fixed SPI_MMC driver broken in 21.11.3 (bug #1249)
+       (backported to 21.11.3).
 - FIX: Fixed broken support for STM32 UART9 and USART10 (bug #1248)
        (backported to 21.11.3).
 - FIX: Fixed wrong initialization in STM32L1xx ADC driver (bug #1247)
