@@ -27,7 +27,7 @@
 /*===========================================================================*/
 
 /**
- * @name    PPRE1 field bits definitions
+ * @name    PPRE2 field bits definitions
  * @{
  */
 #define STM32_PPRE2_MASK        (7U << RCC_CFGR_PPRE2_Pos)
@@ -51,8 +51,8 @@
 #endif
 
 /* Input checks.*/
-#if !defined(STM32_PCLK1_MAX)
-#error "STM32_PCLK1_MAX not defined in hal_lld.h"
+#if !defined(STM32_PCLK2_MAX)
+#error "STM32_PCLK2_MAX not defined in hal_lld.h"
 #endif
 
 #if !defined(STM32_HCLK)

@@ -40,6 +40,7 @@
 #define SB_FASTC_GET_FREQUENCY  2
 #define SB_FASTC_VHAL_VGPIO     96
 #define SB_FASTC_VHAL_VUART     97
+#define SB_FASTC_VRQ_GCSTS      119
 #define SB_FASTC_VRQ_SETWT      120
 #define SB_FASTC_VRQ_CLRWT      121
 #define SB_FASTC_VRQ_SETEN      122
@@ -112,7 +113,13 @@
  */
 #define SB_VSPI_INIT            0
 #define SB_VSPI_DEINIT          1
+#define SB_VSPI_PULSES          2
+#define SB_VSPI_RECEIVE         3
+#define SB_VSPI_SEND            4
+#define SB_VSPI_EXCHANGE        5
 #define SB_VSPI_SETCFG          0
+#define SB_VSPI_SELECT          1
+#define SB_VSPI_UNSELECT        2
 /** @} */
 
 /**

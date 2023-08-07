@@ -74,6 +74,8 @@
 *****************************************************************************
 
 *** Next ***
+- NEW: Support for STM32C0xx.
+- NEW: Improved DAC driver, updated STM32 DACv1.
 - NEW: STM32 RTCv2 and RTCv3 modified to not use shadow registers.
 - NEW: Enhanced STM32F7xx MPU configuration in mcuconf.h.
 - NEW: I2C slave support in HAL high level driver.
@@ -115,6 +117,8 @@
        instead of a simple size.
 - NEW: RT and NIL upgraded to support the enhanced OSLIB.
 - NEW: Memory areas/pointers checker functions added to OSLIB.
+- FIX: Fixed uninitialized return message in EX subsystem (bug #1267)
+       (backported to 21.11.4).
 - FIX: Fixed unnecessary code in SNOR device drivers (bug #1265)
        (backported to 20.3.5)(backported to 21.11.4).
 - FIX: Fixed RP2040 HAL GPIO failed to compile (bug #1264)
