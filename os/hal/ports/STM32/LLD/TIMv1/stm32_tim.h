@@ -90,6 +90,9 @@
 #define STM32_TIM_SMCR_TS_MASK              (7U << 4)
 #define STM32_TIM_SMCR_TS(n)                ((n) << 4)
 
+#define STM32_TIM_SMCR_TS2_MASK             (7U << 20)
+#define STM32_TIM_SMCR_TS2(n)               ((n) << 20)
+
 #define STM32_TIM_SMCR_MSM                  (1U << 7)
 
 #define STM32_TIM_SMCR_ETF_MASK             (15U << 8)
